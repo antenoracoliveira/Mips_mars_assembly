@@ -1,32 +1,24 @@
 .text
-	main: 
-		addi $2, $0, 5
-      		syscall
-
-      		add $8, $2, $0 #menor
-      		add $9, $2, $0 #maior
-     
-      		beq $2, $0, fim
-     
-	for1: 
-		addi $2, $0, 5
-     		 syscall
-      		beq $2, $0, fim
-     
-      		slt $10, $2, $8 #Se $2<$8 than $10=1 else $10=0
-      		beq $10, $0 naomenor
-      		add $8, $0, $2  #menor passa a ser o valor lido  
-	naomenor:
-      		slt $10, $9, $2 #Se $9<$2 than $10=1 else $10=0
-      		beq $10, $0 naomaior
-      		add $9, $0, $2  #maior passa a ser o valor lido
-	naomaior:      
-     
-      j for1          
-      		
-      		
-	
+	main:
+		addi $2,$0,5
+		syscall
+		beq $2,$0,fim
 		
+	eOMenor: 
+		addi $2,$0,5
+		syscall
+		beq $2,$0,fim
+		#guardo no 11 o menor
+		#guardo o menor no 12
+		slt $10,$2,$11 #Se 2<11 => 10=1/ se 2>11 => 10=0
+		beq $10,$0,doisEMaiorQueOMenor
+		add $11,$2,$0
+	doisEMaiorQueOMenor:
+		slt $10,$2,$12 #Se 2<12 => 10=1/ se 2>12 => 10=0
+		bne $10,$0,eOMenor
+		add $12,$2,$0
+		j eOMenor
+	
 	fim:  
 		addi $4, $0, 'M'
 		addi $2, $0, 11
@@ -49,7 +41,7 @@
       		addi $4, $0, ' '
       		addi $2, $0, 11
       		syscall
-      		add $4,$9,$0
+      		add $4,$12,$0
 		addi $2, $0, 1
       		syscall
       		addi $4, $0, '\n'
@@ -77,7 +69,7 @@
       		addi $4, $0, ' '
       		addi $2, $0, 11
       		syscall
-      		add $4,$8,$0
+      		add $4,$11,$0
 		addi $2, $0, 1
       		syscall
       		addi $4, $0, '\n'
@@ -87,4 +79,5 @@
 		
 		addi $2, $0, 10
       		syscall
-
+		
+		
